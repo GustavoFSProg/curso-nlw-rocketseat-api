@@ -14,35 +14,44 @@ interface ScheduleItem {
 app.post('/classes', async (req, res) => {
   const { name, avatar, bio, whatsapp, subject, cost, schedule } = req.body
 
-  const insertUsersId = await db('users').insert({
-    name,
-    avatar,
-    whatsapp,
-    bio,
-  })
+  const trx = await db.transaction()
 
-  const users_id = insertUsersId[0]
+  try {
+    const insertUsersId = await trx('users').insert({
+      name,
+      avatar,
+      whatsapp,
+      bio,
+    })
 
-  const insert_classesId = await db('classes').insert({
-    subject,
-    cost,
-    users_id,
-  })
+    const users_id = insertUsersId[0]
 
-  const class_id = insert_classesId[0]
+    const insert_classesId = await trx('classes').insert({
+      subject,
+      cost,
+      users_id,
+    })
 
-  const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
-    return {
-      class_id,
-      week_day: scheduleItem.week_day,
-      from: convertHourToMinutes(scheduleItem.from),
-      to: convertHourToMinutes(scheduleItem.to),
-    }
-  })
+    const class_id = insert_classesId[0]
 
-  await db('class_schedule').insert(classSchedule)
+    const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
+      return {
+        class_id,
+        week_day: scheduleItem.week_day,
+        from: convertHourToMinutes(scheduleItem.from),
+        to: convertHourToMinutes(scheduleItem.to),
+      }
+    })
 
-  return res.send('Cadastro registered Success!')
+    await trx('class_schedule').insert(classSchedule)
+
+    await trx.commit()
+
+    return res.status(201).send({ mensagem: 'Cadastro registered Success!' })
+  } catch (error) {
+    await trx.rollback()
+    return res.status(400).send({ error })
+  }
 })
 
 app.listen(3000, () => {
