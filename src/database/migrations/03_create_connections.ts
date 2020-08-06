@@ -3,9 +3,6 @@ import knex from 'knex'
 export async function up(knex: knex) {
   return knex.schema.createTable('connections', (table) => {
     table.increments('id').primary()
-    table.integer('week_day').notNullable()
-    table.integer('from').notNullable()
-    table.integer('to').notNullable()
 
     table
       .integer('user_id')
@@ -15,7 +12,10 @@ export async function up(knex: knex) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
 
-    table.timestamp('create_at').defaultTo('now').notNullable()
+    table
+      .timestamp('create_at')
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+      .notNullable()
   })
 }
 
