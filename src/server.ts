@@ -13,12 +13,13 @@ const classes_controllers = new classController()
 const connections_Controllers = new connectionsControllers()
 
 app.get('/', classes_controllers.index)
-app.post('/classes', connections_Controllers.create)
+app.post('/classes', classes_controllers.create)
 app.get('/connections', connections_Controllers.index)
 app.post('/connections', connections_Controllers.create)
 
-app.listen(3000, () => {
-  console.log('Rodando a api')
+const PORT = 3333
+app.listen(PORT, () => {
+  console.log('Rodando a api on PORT: ', PORT)
 })
 
 export default app
