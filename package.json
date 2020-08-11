@@ -6,13 +6,13 @@
   "author": "Gustavo <gustavosohne38@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "12.x"
+    "node": "12.16.x"
   },
   "scripts": {
     "start": "NODE_ENV=production npm run build && node --optimize_for_size dist/index.js",
     "dev": "NODE_ENV=development tsnd --transpile-only --ignore-watch node_modules --respawn src/index.ts",
     "build": "babel src --out-dir dist --copy-files --extensions '.ts,.js'",
-   "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback"
   },
   "devDependencies": {
