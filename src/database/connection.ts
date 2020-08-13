@@ -1,12 +1,10 @@
-import knex from "knex";
-import path from "path";
+import knex from 'knex'
+import dotenv from 'dotenv'
 
 const db = knex({
-  client: "sqlite3",
-  connection: {
-    filename: path.resolve(__dirname, "database.sqlite"),
-  },
+  client: 'pg',
+  connection: 'postgresql://gustavo:jogu3340@localhost:5432/proffy',
   useNullAsDefault: true,
-});
+})
 
-export default db;
+export default db

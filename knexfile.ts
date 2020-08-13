@@ -1,12 +1,13 @@
-import path from "path";
+import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 module.exports = {
-  client: "sqlite3",
-  connection: {
-    filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
-  },
+  client: 'pg',
+  connection: 'postgresql://gustavo:jogu3340@localhost:5432/proffy',
   migrations: {
-    directory: path.resolve(__dirname, "src", "database", "migrations"),
+    directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
   },
   useNullAsDefault: true,
-};
+}

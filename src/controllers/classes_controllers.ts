@@ -32,12 +32,10 @@ export default class ClassesController {
       .whereExists(function () {
         this.select('class_schedule.*')
           .from('class_schedule')
-          .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
-          .whereRaw('`class_schedule`.`week_day` = ??', [
-            Number(filters.week_day),
-          ])
-          .whereRaw('`class_schedule`.`from`<= ??', [timeInMinutes])
-          .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
+          .whereRaw('class_schedule.class_id = classes.id')
+          .whereRaw('class_schedule.week_day = ??', [Number(filters.week_day)])
+          .whereRaw('class_schedule.from<= ??', [timeInMinutes])
+          .whereRaw('class_schedule.to > ??', [timeInMinutes])
       })
       .where('classes.subject', '=', filters.subject as string)
       .join('users', 'classes.users_id', '=', 'users.id')
@@ -52,20 +50,24 @@ export default class ClassesController {
     const trx = await db.transaction()
 
     try {
-      const insertUsersId = await trx('users').insert({
-        name,
-        avatar,
-        whatsapp,
-        bio,
-      })
+      const insertUsersId = await trx('users')
+        .insert({
+          name,
+          avatar,
+          whatsapp,
+          bio,
+        })
+        .returning('id')
 
       const users_id = insertUsersId[0]
 
-      const insert_classesId = await trx('classes').insert({
-        subject,
-        cost,
-        users_id,
-      })
+      const insert_classesId = await trx('classes')
+        .insert({
+          subject,
+          cost,
+          users_id,
+        })
+        .returning('id')
 
       const class_id = insert_classesId[0]
 
