@@ -5,7 +5,7 @@ dotenv.config()
 
 module.exports = {
   client: 'pg',
-  connection: 'postgresql://gustavo:jogu3340@localhost:5432/proffy',
+  connection: process.env.DATABASE_URL,
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
   },
