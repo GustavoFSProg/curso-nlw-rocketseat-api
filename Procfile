@@ -1,1 +1,1 @@
-web: yarn build && node --optimize_for_size dist/server.js
+web: yarn start
