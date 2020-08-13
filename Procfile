@@ -1,1 +1,1 @@
-web: npm run build && node --optimize_for_size dist/index.js
+web: npm run build && node --optimize_for_size dist/server.js
