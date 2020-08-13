@@ -1,1 +1,1 @@
-web: npm run build && node --optimize_for_size dist/server.js
+web: yarn build && node --optimize_for_size dist/server.js

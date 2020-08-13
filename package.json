@@ -9,7 +9,7 @@
     "node": "12.16.x"
   },
   "scripts": {
-    "start": "NODE_ENV=production npm run build && node --optimize_for_size dist/server.ts",
+    "start": "NODE_ENV=production npm run build && node --optimize_for_size dist/server.js",
     "dev": "NODE_ENV=development tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "build": "babel src --out-dir dist --copy-files --extensions '.ts,.js'",
     "migrate": "knex --knexfile knexfile.ts migrate:latest",
