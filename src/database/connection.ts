@@ -14,7 +14,7 @@ const db = knex({
     database: process.env.PG_DATABASE,
   },
 
-  useNullAsDefault: true,
+  useNullAsDefault: true, 
 })
 
 export default db
