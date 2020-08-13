@@ -17,7 +17,7 @@ app.post('/classes', classes_controllers.create)
 app.get('/connections', connections_Controllers.index)
 app.post('/connections', connections_Controllers.create)
 
-const PORT = 3333
+const PORT = process.env.PORT || 3333
 app.listen(PORT, () => {
   console.log('Rodando a api on PORT: ', PORT)
 })
